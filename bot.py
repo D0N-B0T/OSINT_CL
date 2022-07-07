@@ -70,8 +70,9 @@ def findRut():
 
 def findPatente():
     url = "https://www.patentechile.com/resultados"
-    patente = '{args}'.format(args = send_patente.patente_arg)
-    data= ({'frmTerm':'ksbf81','frmOpcion':'vehiculo'}) 
+    arg_patente = '{args}'.format(args = send_patente.patente_arg)
+    data = ({'patente':'{args}'.format(args = send_patente.patente_arg)})
+    data= ({'frmTerm':arg_patente,'frmOpcion':'vehiculo'}) 
     r = requests.post(url, data=data)
     soup = sp(r.text, 'html.parser')
     if r.status_code == 200:
