@@ -22,7 +22,7 @@ def send_rut(message):
     send_rut.rut_arg = rut_args
     bot.send_message(message.chat.id, findRut())
 
-@bot.message_handler(command='patente')
+@bot.message_handler(command=['patente'])
 def send_patente(message):
     patente_args = message.text
     patente_args = patente_args.split()
