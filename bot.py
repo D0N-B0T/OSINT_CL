@@ -71,9 +71,6 @@ def send_patente(message):
     print(patente_args)
     send_patente.patente_arg = patente_args
     print(send_patente.patente_arg)
-    bot.send_message(message.chat.id, findPatente())
-
-def findPatente():
     url = "https://www.patentechile.com/resultados"
 
     data= {'frmTerm':'{args}'.format(args = send_patente.patente_arg),'frmOpcion':'vehiculo'}
@@ -91,10 +88,8 @@ def findPatente():
     n_motor = soup.find_all('td')[20].text
     n_chasis = soup.find_all('td')[22].text
     poseemultas = soup.find_all('td')[24].text
-    return 'RUT propietario: ' + rut_propietario + '\n' + 'Nombre del propietario: ' + nombre_propietario + '\n' + 'Numero Patente: ' + patente + '\n' + 'Tipo vehiculo '+ tipo_vehiculo + '\n' + 'Marca vehiculo: ' + marca_vehiculo + '\n'+ 'Modelo vehiculo: ' + modelo_vehiculo + '\n' + 'Color vehiculo' + color_vehiculo + '\n' + 'Año vehiculo: ' + ano_vehiculo + '\n' +'Numero de motor: '+ n_motor + '\n' +'Numero de chasis: '+  n_chasis + '\n' +'Multas: ' + poseemultas
+    bot.send_message(message.chat.id, 'RUT propietario: ' + rut_propietario + '\n' + 'Nombre del propietario: ' + nombre_propietario + '\n' + 'Numero Patente: ' + patente + '\n' + 'Tipo vehiculo '+ tipo_vehiculo + '\n' + 'Marca vehiculo: ' + marca_vehiculo + '\n'+ 'Modelo vehiculo: ' + modelo_vehiculo + '\n' + 'Color vehiculo' + color_vehiculo + '\n' + 'Año vehiculo: ' + ano_vehiculo + '\n' +'Numero de motor: '+ n_motor + '\n' +'Numero de chasis: '+  n_chasis + '\n' +'Multas: ' + poseemultas)
         
-
-
 
 #add polling
 bot.infinity_polling()
