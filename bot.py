@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup as sp
 
 bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
 
+
+
+
 @bot.message_handler(commands=['salud'])
 def send_salud(message):
     salud_args = message.text
@@ -13,23 +16,6 @@ def send_salud(message):
     salud_args = salud_args[1]
     send_salud.salud_arg = salud_args
     bot.send_message(message.chat.id, findSalud())
-
-@bot.message_handler(commands=['rut'])
-def send_rut(message):
-    rut_args = message.text
-    rut_args = rut_args.split()
-    rut_args = rut_args[1]
-    send_rut.rut_arg = rut_args
-    bot.send_message(message.chat.id, findRut())
-
-@bot.message_handler(command=['patente'])
-def send_patente(message):
-    patente_args = message.text
-    patente_args = patente_args.split()
-    patente_args = patente_args[1]
-    send_patente.patente_arg = patente_args
-    bot.send_message(message.chat.id, findPatente())
-
 
     
 def findSalud():
@@ -45,7 +31,13 @@ def findSalud():
     else:
         return 'Error en request'
 
-
+@bot.message_handler(commands=['rut'])
+def send_rut(message):
+    rut_args = message.text
+    rut_args = rut_args.split()
+    rut_args = rut_args[1]
+    send_rut.rut_arg = rut_args
+    bot.send_message(message.chat.id, findRut())
 
 def findRut():
     url = "https://rutificador.org/backend.php"
@@ -68,6 +60,16 @@ def findRut():
     else: 
         return 'Error en request'
 
+
+@bot.message_handler(command=['patente','pat'])
+def send_patente(message):
+    patente_args = message.text
+    patente_args = patente_args.split()
+    patente_args = patente_args[1]
+    send_patente.patente_arg = patente_args
+    bot.send_message(message.chat.id, findPatente())
+
+
 def findPatente():
     url = "https://www.patentechile.com/resultados"
     arg_patente = '{args}'.format(args = send_patente.patente_arg)
@@ -76,22 +78,18 @@ def findPatente():
     r = requests.post(url, data=data)
     soup = sp(r.text, 'html.parser')
     if r.status_code == 200:
-        if soup.find('h2'):
-            return 'No se encontraron resultados'
-        else:
-            rut_propietario = soup.find_all('td')[2].text
-            nombre_propietario = soup.find_all('td')[4].text
-            patente = soup.find_all('td')[8].text
-            tipo_vehiculo = soup.find_all('td')[10].text
-            marca_vehiculo = soup.find_all('td')[12].text
-            modelo_vehiculo = soup.find_all('td')[14].text
-            ano_vehiculo = soup.find_all('td')[16].text
-            color_vehiculo = soup.find_all('td')[18].text
-            n_motor = soup.find_all('td')[20].text
-            n_chasis = soup.find_all('td')[22].text
-            poseemultas = soup.find_all('td')[24].text
-
-            return 'RUT propietario: ' + rut_propietario + '\n' + 'Nombre del propietario: ' + nombre_propietario + '\n' + 'Numero Patente: ' + patente + '\n' + 'Tipo vehiculo '+ tipo_vehiculo + '\n' + 'Marca vehiculo: ' + marca_vehiculo + '\n'+ 'Modelo vehiculo: ' + modelo_vehiculo + '\n' + 'Color vehiculo' + color_vehiculo + '\n' + 'Año vehiculo: ' + ano_vehiculo + '\n' +'Numero de motor: '+ n_motor + '\n' +'Numero de chasis: '+  n_chasis + '\n' +'Multas: ' + poseemultas
+        rut_propietario = soup.find_all('td')[2].text
+        nombre_propietario = soup.find_all('td')[4].text
+        patente = soup.find_all('td')[8].text
+        tipo_vehiculo = soup.find_all('td')[10].text
+        marca_vehiculo = soup.find_all('td')[12].text
+        modelo_vehiculo = soup.find_all('td')[14].text
+        ano_vehiculo = soup.find_all('td')[16].text
+        color_vehiculo = soup.find_all('td')[18].text
+        n_motor = soup.find_all('td')[20].text
+        n_chasis = soup.find_all('td')[22].text
+        poseemultas = soup.find_all('td')[24].text
+        return 'RUT propietario: ' + rut_propietario + '\n' + 'Nombre del propietario: ' + nombre_propietario + '\n' + 'Numero Patente: ' + patente + '\n' + 'Tipo vehiculo '+ tipo_vehiculo + '\n' + 'Marca vehiculo: ' + marca_vehiculo + '\n'+ 'Modelo vehiculo: ' + modelo_vehiculo + '\n' + 'Color vehiculo' + color_vehiculo + '\n' + 'Año vehiculo: ' + ano_vehiculo + '\n' +'Numero de motor: '+ n_motor + '\n' +'Numero de chasis: '+  n_chasis + '\n' +'Multas: ' + poseemultas
     else:
         return 'Error en request'
 
