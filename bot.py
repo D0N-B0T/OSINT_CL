@@ -73,8 +73,7 @@ def send_patente(message):
 def findPatente():
     url = "https://www.patentechile.com/resultados"
     arg_patente = '{args}'.format(args = send_patente.patente_arg)
-    data = ({'patente':'{args}'.format(args = send_patente.patente_arg)})
-    data= ({'frmTerm':arg_patente,'frmOpcion':'vehiculo'}) 
+    data= ({'frmTerm':str(arg_patente),'frmOpcion':'vehiculo'}) 
     r = requests.post(url, data=data)
     soup = sp(r.text, 'html.parser')
     if r.status_code == 200:
