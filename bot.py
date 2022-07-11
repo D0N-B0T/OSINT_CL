@@ -64,9 +64,13 @@ def findRut():
 @bot.message_handler(command=['patente','pat'])
 def send_patente(message):
     patente_args = message.text
+    print(patente_args)
     patente_args = patente_args.split()
+    print(patente_args)
     patente_args = patente_args[1]
+    print(patente_args)
     send_patente.patente_arg = patente_args
+    print(send_patente.patente_arg)
     bot.send_message(message.chat.id, findPatente())
 
 
