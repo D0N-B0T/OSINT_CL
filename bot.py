@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup as sp
 bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
 
 
-@bot.message_handler(command=['patente','pat'])
+@bot.message_handler(commands=['patente','pat'])
 def send_patente(message):
     patente_args = message.text
     print(patente_args)
