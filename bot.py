@@ -140,7 +140,7 @@ def findSii():
     razon_social = razon_social[1][74:].strip()
 
     #Inicio de actividades
-    inicio_actividades =datos.find_all("span")
+    inicio_actividades = datos.find_all("span")
     inicio_actividades = consulta_sii.text.split("Fecha de Inicio de Actividades: ")
     if len(inicio_actividades)>1:    
         inicio_actividades = inicio_actividades[1][0:10]
@@ -154,7 +154,18 @@ def multasDirTrabajo():
     return
 
 
+def edad():
+    rut = "{args}".format(args = send_rut.rut_arg)
+    urlroted = 'uggcf://znfgrepuvyrncx.vasb/jf-oveguqnli3/ncv/?ehg='
+    url = codecs.decode(urlroted, 'rot_13')  + rut
+    print('')
+    print('Datos de la persona')
+    print('')
 
+    response = requests.get(url)
+    response = response .json()
+    for item in response:
+            return "Nombre                   : " + item['nombre'] + "\n" + "Edad                     : " + item['edad'] + "\n" + "Fecha de nacimiento      : " + item['fecha_nacimiento']
 
 
 #add polling
