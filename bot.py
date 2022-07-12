@@ -129,7 +129,7 @@ def findSii():
     code = base64.b64decode(txtCaptcha)[36:40]
 
     #Petición al SII, con captcha resuelto
-    consulta_sii = requests.post("https://zeus.sii.cl/cvc_cgi/stc/getstc",data={'RUT':rut,'DV':dv.upper(),'PRG':'STC','OPC':'NOR','txt_code':code,'txt_captcha':txtCaptcha})
+    consulta_sii = requests.post("https://zeus.sii.cl/cvc_cgi/stc/getstc",data={'RUT':rut,'DV':dv.upper(),'PRG':'STC','OPC':'NOR','txt_code':code,'txt_captcha':txtCaptcha}, verify=True)
 
     #Parseo de los datos
     datos = BeautifulSoup(consulta_sii.text,"html.parser")
