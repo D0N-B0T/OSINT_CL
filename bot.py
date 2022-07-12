@@ -3,6 +3,9 @@ import telebot
 import secrets
 import json 
 from bs4 import BeautifulSoup as sp
+import urllib
+import codecs 
+import base64
 
 bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
 
@@ -89,6 +92,69 @@ def findRut():
         return 'Nombre completo: ' + nombre1 + ' ' + nombre2 + ' ' + apellido1 + ' ' + apellido2 + '\n' + 'Rut: ' + rut + '\n' + 'Sexo: ' + sexo + '\n' + 'Direccion: ' + direccion + '\n' + 'Comuna: ' + comuna
     else: 
         return 'Error en request'
+
+
+@bot.message_handler(commands=['multas'])
+
+@bot.message_handler(commands=['sii'])
+def send_sii(message):
+    sii_args = message.text
+    sii_args = sii_args.split()
+    sii_args = sii_args[1]
+    send_sii.sii_arg = sii_args
+    bot.send_message(message.chat.id, findSii())
+
+
+
+def findSii():
+    import base64
+    import requests
+    from bs4 import BeautifulSoup
+
+    #Datos de ejemplo
+    rut = "{args}".format(args = send_sii.sii_arg)
+    #split rut into rut and dv
+    rut_split = rut.split('-')
+    rut = rut_split[0]
+    dv = rut_split[1]
+    
+
+    #Request al SII-captcha
+    captcha_req = requests.post("https://zeus.sii.cl/cvc_cgi/stc/CViewCaptcha.cgi",data={'oper':'0'})
+    respuesta = captcha_req.json()
+    #Se obtiene el string que contiene la información del captcha
+    txtCaptcha= respuesta['txtCaptcha']
+
+    #Decodificación del texto anterior
+    code = base64.b64decode(txtCaptcha)[36:40]
+
+    #Petición al SII, con captcha resuelto
+    consulta_sii = requests.post("https://zeus.sii.cl/cvc_cgi/stc/getstc",data={'RUT':rut,'DV':dv.upper(),'PRG':'STC','OPC':'NOR','txt_code':code,'txt_captcha':txtCaptcha})
+
+    #Parseo de los datos
+    datos = BeautifulSoup(consulta_sii.text,"html.parser")
+
+    #Obtención de la razón social
+    razon_social= consulta_sii.text.split("n Social&nbsp;:")
+    razon_social = razon_social[1].split("</div>")
+    razon_social = razon_social[1][74:].strip()
+
+    #Inicio de actividades
+    inicio_actividades =datos.find_all("span")
+    inicio_actividades = consulta_sii.text.split("Fecha de Inicio de Actividades: ")
+    if len(inicio_actividades)>1:    
+        inicio_actividades = inicio_actividades[1][0:10]
+    else:
+        inicio_actividades = None
+
+    return razon_social, inicio_actividades
+
+def multasDirTrabajo():
+    #https://ventanilla.dirtrab.cl/RegistroEmpleador/consultamultas.aspx
+    return
+
+
+
 
 
 #add polling
