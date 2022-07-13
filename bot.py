@@ -4,7 +4,9 @@ import secrets
 import json 
 from bs4 import BeautifulSoup as sp
 import codecs 
-import pandas as pd
+import base64
+
+
 
 bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
 
@@ -101,9 +103,6 @@ def send_sii(message):
 
 
 def findSii():
-    import base64
-    import requests
-    from bs4 import BeautifulSoup
 
     #Datos de ejemplo
     rut = "{args}".format(args = send_sii.sii_arg)
@@ -126,7 +125,7 @@ def findSii():
     consulta_sii = requests.post("https://zeus.sii.cl/cvc_cgi/stc/getstc",data={'RUT':rut,'DV':dv.upper(),'PRG':'STC','OPC':'NOR','txt_code':code,'txt_captcha':txtCaptcha}, verify=True)
 
     #Parseo de los datos
-    datos = BeautifulSoup(consulta_sii.text,"html.parser")
+    datos = sp(consulta_sii.text,"html.parser")
 
     #Obtención de la razón social
     razon_social= consulta_sii.text.split("n Social&nbsp;:")
@@ -160,14 +159,6 @@ def edad():
     response = response .json()
     for item in response:
             return "Nombre                   : " + item['nombre'] + "\n" + "Edad                     : " + item['edad'] + "\n" + "Fecha de nacimiento      : " + item['fecha_nacimiento']
-
-
-
-
-
-
-
-
 
 
 ######################################### RUT ###############################################
