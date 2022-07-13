@@ -135,26 +135,23 @@ def findSii():
 
     return razon_social, inicio_actividades
 
-def multasDirTrabajo():
-    #https://ventanilla.dirtrab.cl/RegistroEmpleador/consultamultas.aspx
-    return
 
 
 def edad():
     rut = "{args}".format(args = send_rut.rut_arg)
     urlroted = 'uggcf://znfgrepuvyrncx.vasb/jf-oveguqnli3/ncv/?ehg='
     url = codecs.decode(urlroted, 'rot_13')  + rut
-    print('')
-    print('Datos de la persona')
-    print('')
-
     response = requests.get(url)
     response = response .json()
     for item in response:
             return "Nombre                   : " + item['nombre'] + "\n" + "Edad                     : " + item['edad'] + "\n" + "Fecha de nacimiento      : " + item['fecha_nacimiento']
 
+def multasDirTrabajo():
+    #https://ventanilla.dirtrab.cl/RegistroEmpleador/consultamultas.aspx
+    return
 
-######################################### RUT ###############################################
+
+######################################### get all ###############################################
 
 @bot.message_handler(commands=['r'])
 def start(message):
