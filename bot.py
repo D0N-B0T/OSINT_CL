@@ -165,34 +165,37 @@ def edad():
 
 @bot.message_handler(commands=['r'])
 def start(message):
-    
+    bot.send_message(message.chat.id, 'Obteniendo datos de la persona...')
     rut_args = message.text
     rut_args = rut_args.split()
     rut_args = rut_args[1]
 
      #rutificador
+    bot.send_message(message.chat.id, '====================================')
     url = "https://rutificador.org/backend.php"
     rut = "{args}".format(args = rut_args)
     data= ({'action':'search_by_rut','rut':'{args}'.format(args = rut_args)})
     r = requests.post(url, data=data)
     soup = sp(r.text, 'html.parser')
-    if r.status_code == 200:
-        nombre_completo = soup.find_all('td')[1].text
-        nombre_completo = nombre_completo.split()
-        nombre1 = nombre_completo[2]
-        nombre2 = nombre_completo[3]
-        apellido1 = nombre_completo[0]
-        apellido2 = nombre_completo[1]
-        rut  = soup.find_all('td')[0].text
-        sexo = soup.find_all('td')[2].text
-        direccion = soup.find_all('td')[3].text
-        comuna = soup.find_all('td')[4].text
-        bot.send_message(message.chat.id, 'Nombre completo: ' + nombre1 + ' ' + nombre2 + ' ' + apellido1 + ' ' + apellido2 + '\n' + 'Rut: ' + rut + '\n' + 'Sexo: ' + sexo + '\n' + 'Direccion: ' + direccion + '\n' + 'Comuna: ' + comuna)
-    else: 
+    try:         
+        if r.status_code == 200:
+            nombre_completo = soup.find_all('td')[1].text
+            nombre_completo = nombre_completo.split()
+            nombre1 = nombre_completo[2]
+            nombre2 = nombre_completo[3]
+            apellido1 = nombre_completo[0]
+            apellido2 = nombre_completo[1]
+            rut  = soup.find_all('td')[0].text
+            sexo = soup.find_all('td')[2].text
+            direccion = soup.find_all('td')[3].text
+            comuna = soup.find_all('td')[4].text
+            bot.send_message(message.chat.id, 'Nombre completo: ' + nombre1 + ' ' + nombre2 + ' ' + apellido1 + ' ' + apellido2 + '\n' + 'Rut: ' + rut + '\n' + 'Sexo: ' + sexo + '\n' + 'Direccion: ' + direccion + '\n' + 'Comuna: ' + comuna)
+        else: 
+            bot.send_message(message.chat.id, 'No se encontro ese rut')
+    except:
         bot.send_message(message.chat.id, 'No se encontro ese rut')
-
     #edad
-    bot.send_message(message.chat.id, 'Obteniendo datos de la persona')
+    bot.send_message(message.chat.id, '====================================')
     rut = "{args}".format(args = rut_args)
     urlroted = 'uggcf://znfgrepuvyrncx.vasb/jf-oveguqnli3/ncv/?ehg='
     url = codecs.decode(urlroted, 'rot_13')  + rut
@@ -203,7 +206,7 @@ def start(message):
 
 
     # SALUD    
-    bot.send_message(message.chat.id, 'Obteniendo mas datos desde el CENTRO MEDICO UC CHRISTUS')
+    bot.send_message(message.chat.id, '====================================')
     url = "https://apigw.ucchristus.cl/agendaambulatoria-prod/Pacientes?tipoIdPaciente=RUN&paisIdentificador=CL&idPaciente={args}".format(args = rut_args)
     r = requests.get(url)  
     if r.status_code == 200:
