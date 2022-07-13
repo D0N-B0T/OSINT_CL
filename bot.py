@@ -182,22 +182,25 @@ def start(message):
     else:
         bot.send_message(message.chat.id, 'Error en request')
     
+
     # PATENTE
-    url = "https://www.patentechile.com/resultados"
-
-    data= {'frmTerm': '{args}'.format(args = rut_args), 'frmOpcion': 'rut'}
-    r = requests.post(url, data=data)
-    soup = sp(r.text, 'html.parser')
-
-    patente_vehiculo = soup.find_all('td')[8].text
-    tipo_vehiculo = soup.find_all('td')[9].text
-    marca_vehiculo = soup.find_all('td')[10].text
-    modelo_vehiculo = soup.find_all('td')[11].text
-    n_motor = soup.find_all('td')[12].text
-    año_vehiculo = soup.find_all('td')[13].text
-
-    bot.send_message(message.chat.id, 'Patente: ' + patente_vehiculo+'\n'+ 'Tipo: ' + tipo_vehiculo+'\n'+ 'Marca: ' + marca_vehiculo+'\n'+ 'Modelo: ' + modelo_vehiculo+'\n'+ 'N° Motor: ' + n_motor+'\n'+ 'Año: ' + año_vehiculo)
-
+    try: 
+        url = "https://www.patentechile.com/resultados"
+        data= {'frmTerm': '{args}'.format(args = rut_args), 'frmOpcion': 'rut'}
+        r = requests.post(url, data=data)
+        soup = sp(r.text, 'html.parser')
+        if r.status_code == 200:
+            patente_vehiculo = soup.find_all('td')[8].text
+            tipo_vehiculo = soup.find_all('td')[9].text
+            marca_vehiculo = soup.find_all('td')[10].text
+            modelo_vehiculo = soup.find_all('td')[11].text
+            n_motor = soup.find_all('td')[12].text
+            año_vehiculo = soup.find_all('td')[13].text
+            bot.send_message(message.chat.id, 'Patente: ' + patente_vehiculo+'\n'+ 'Tipo: ' + tipo_vehiculo+'\n'+ 'Marca: ' + marca_vehiculo+'\n'+ 'Modelo: ' + modelo_vehiculo+'\n'+ 'N° Motor: ' + n_motor+'\n'+ 'Año: ' + año_vehiculo)
+        else:
+            bot.send_message(message.chat.id, 'Error en request')
+    except:
+        bot.send_message(message.chat.id, 'Error en request')
 
     #edad
     rut = "{args}".format(args = rut_args)
