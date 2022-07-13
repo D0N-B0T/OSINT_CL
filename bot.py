@@ -68,11 +68,10 @@ def findRut():
     r = requests.post(url, data=data)
     soup = sp(r.text, 'html.parser')
     if r.status_code == 200:
-        rut = soup.find_all('td')[0].text
         nombre = soup.find_all('td')[1].text
         direccion = soup.find_all('td')[3].text
         comuna = soup.find_all('td')[4].text
-        return "Rut: " + rut + "\n" + "Nombre: " + nombre + "\n" + "Direccion: " + direccion + "\n" + "Comuna: " + comuna
+        return "Nombre: " + nombre + "\n" + "Direccion: " + direccion + "\n" + "Comuna: " + comuna
     else: 
         return 'Error en request'
 
@@ -166,11 +165,10 @@ def start(message):
     soup = sp(r.text, 'html.parser')
     try:         
         if r.status_code == 200:
-            rut = soup.find_all('td')[0].text
             nombre = soup.find_all('td')[1].text
             direccion = soup.find_all('td')[3].text
             comuna = soup.find_all('td')[4].text
-            return "Rut: " + rut + "\n" + "Nombre: " + nombre + "\n" + "Direccion: " + direccion + "\n" + "Comuna: " + comuna
+            return "Nombre: " + nombre + "\n" + "Direccion: " + direccion + "\n" + "Comuna: " + comuna
         else: 
             bot.send_message(message.chat.id, 'No se encontro ese rut')
     except:
