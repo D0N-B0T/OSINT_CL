@@ -163,7 +163,7 @@ def edad():
 
 ######################################### RUT ###############################################
 
-@bot.message_handler(commands=['rut'])
+@bot.message_handler(commands=['r'])
 def start(message):
     rut_args = message.text
     rut_args = rut_args.split()
