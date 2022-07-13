@@ -210,7 +210,7 @@ def start(message):
     response = requests.get(url)
     response = response .json()
     for item in response:
-            bot.send_message(message.chat.id, "Nombre                   : " + item['nombre'] + "\n" + "Edad                     : " + item['edad'] + "\n" + "Fecha de nacimiento      : " + item['fecha_nacimiento'])
+            bot.send_message(message.chat.id, "Nombre: " + item['nombre'] + "\n" + "Edad: " + str(item['edad']) + "\n" + "Fecha de nacimiento: " + str(item['fecha_nacimiento']))
 
     #rutificador
     url = "https://rutificador.org/backend.php"
