@@ -24,11 +24,18 @@ def patente():
     data= {'frmTerm':'{args}'.format(args = send_patente.patente_arg),'frmOpcion':'vehiculo'}
     r = requests.post(url, data=data)
     soup = sp(r.text, 'html.parser')
-    rut = soup.find_all('td')[0].text
-    nombre = soup.find_all('td')[1].text
-    direccion = soup.find_all('td')[3].text
-    comuna = soup.find_all('td')[4].text
-    return "Rut: " + rut + "\n" + "Nombre: " + nombre + "\n" + "Direccion: " + direccion + "\n" + "Comuna: " + comuna
+    rut_propietario = soup.find_all('td')[2].text
+    nombre_propietario = soup.find_all('td')[4].text
+    patente = soup.find_all('td')[8].text
+    tipo_vehiculo = soup.find_all('td')[10].text
+    marca_vehiculo = soup.find_all('td')[12].text
+    modelo_vehiculo = soup.find_all('td')[14].text
+    ano_vehiculo = soup.find_all('td')[16].text
+    color_vehiculo = soup.find_all('td')[18].text
+    n_motor = soup.find_all('td')[20].text
+    n_chasis = soup.find_all('td')[22].text
+    poseemultas = soup.find_all('td')[24].text
+    return 'RUT propietario: ' + rut_propietario + '\n' + 'Nombre del propietario: ' + nombre_propietario + '\n' + 'Numero Patente: ' + patente + '\n' + 'Tipo vehiculo '+ tipo_vehiculo + '\n' + 'Marca vehiculo: ' + marca_vehiculo + '\n'+ 'Modelo vehiculo: ' + modelo_vehiculo + '\n' + 'Color vehiculo' + color_vehiculo + '\n' + 'Año vehiculo: ' + ano_vehiculo + '\n' +'Numero de motor: '+ n_motor + '\n' +'Numero de chasis' + n_chasis + '\n' + 'Posee multas: ' + poseemultas + '\n' 
 
 
 @bot.message_handler(commands=['salud'])
