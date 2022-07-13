@@ -163,71 +163,74 @@ def start(message):
     rut_args = rut_args.split()
     rut_args = rut_args[1]
 
-     #rutificador
+    #rutificador
     bot.send_message(message.chat.id, '====================================')
-    url = "https://rutificador.org/backend.php"
-    rut = "{args}".format(args = rut_args)
-    data= ({'action':'search_by_rut','rut':'{args}'.format(args = rut_args)})
-    r = requests.post(url, data=data)
-    soup = sp(r.text, 'html.parser')
-    try:         
+    try:   
+        url = "https://rutificador.org/backend.php"
+        rut = "{args}".format(args = rut_args)
+        data= ({'action':'search_by_rut','rut':'{args}'.format(args = rut_args)})
+        r = requests.post(url, data=data)
+        soup = sp(r.text, 'html.parser')
+          
         if r.status_code == 200:
             nombre = soup.find_all('td')[1].text
             direccion = soup.find_all('td')[3].text
             comuna = soup.find_all('td')[4].text
-            return "Nombre: " + nombre + "\n" + "Direccion: " + direccion + "\n" + "Comuna: " + comuna
+            return "Nombre: " + str(nombre) + "\n" + "Direccion: " + str(direccion) + "\n" + "Comuna: " + str(comuna)
         else: 
             bot.send_message(message.chat.id, 'No se encontro ese rut')
     except:
         bot.send_message(message.chat.id, 'No se encontro ese rut')
+
     #edad
     bot.send_message(message.chat.id, '====================================')
-    rut = "{args}".format(args = rut_args)
-    urlroted = 'uggcf://znfgrepuvyrncx.vasb/jf-oveguqnli3/ncv/?ehg='
-    url = codecs.decode(urlroted, 'rot_13')  + rut
-    response = requests.get(url)
-    response = response .json()
-    for item in response:
-            bot.send_message(message.chat.id, "Edad: " + str(item['edad']) + "\n" + "Fecha de nacimiento: " + str(item['fecha_nacimiento']))
+    try: 
+        rut = "{args}".format(args = rut_args)
+        urlroted = 'uggcf://znfgrepuvyrncx.vasb/jf-oveguqnli3/ncv/?ehg='
+        url = codecs.decode(urlroted, 'rot_13')  + rut
+        response = requests.get(url)
+        response = response .json()
+        for item in response:
+                bot.send_message(message.chat.id, "Edad: " + str(item['edad']) + "\n" + "Fecha de nacimiento: " + str(item['fecha_nacimiento']))
+    except:
+        bot.send_message(message.chat.id, 'Error en request')
 
 
     # SALUD    
-    bot.send_message(message.chat.id, '====================================')
-    url = "https://apigw.ucchristus.cl/agendaambulatoria-prod/Pacientes?tipoIdPaciente=RUN&paisIdentificador=CL&idPaciente={args}".format(args = rut_args)
-    r = requests.get(url)  
-    if r.status_code == 200:
-        datosJson = json.loads(r.text)
-        data = json.loads(r.text)
-        if data['statusCod'] == 'OK':
-            bot.send_message(message.chat.id, 'Nombre completo: ' + str(datosJson['listaPacientes'][0]['nombreCompleto']) + '\n' + 'Telefono: ' + str(datosJson['listaPacientes'][0]['numeroTelefonoPrincipal']) + '\n' + 'Direccion: ' + str(datosJson['listaPacientes'][0]['direccion']) + '\n' + 'Email: ' + str(datosJson['listaPacientes'][0]['email']))
+    try:
+        bot.send_message(message.chat.id, '====================================')
+        url = "https://apigw.ucchristus.cl/agendaambulatoria-prod/Pacientes?tipoIdPaciente=RUN&paisIdentificador=CL&idPaciente={args}".format(args = rut_args)
+        r = requests.get(url)  
+        if r.status_code == 200:
+            datosJson = json.loads(r.text)
+            data = json.loads(r.text)
+            if data['statusCod'] == 'OK':
+                bot.send_message(message.chat.id, 'Nombre completo: ' + str(datosJson['listaPacientes'][0]['nombreCompleto']) + '\n' + 'Telefono: ' + str(datosJson['listaPacientes'][0]['numeroTelefonoPrincipal']) + '\n' + 'Direccion: ' + str(datosJson['listaPacientes'][0]['direccion']) + '\n' + 'Email: ' + str(datosJson['listaPacientes'][0]['email']))
+            else:
+                bot.send_message(message.chat.id, 'No se encontro ningun paciente con ese rut')
         else:
-            bot.send_message(message.chat.id, 'No se encontro ningun paciente con ese rut')
-    else:
+            bot.send_message(message.chat.id, 'Error en request')
+    except:
         bot.send_message(message.chat.id, 'Error en request')
     
     # PATENTE
-    bot.send_message(message.chat.id, 'Obteniendo datos de la patente')
+    bot.send_message(message.chat.id, '====================================')
     try: 
         url = "https://www.patentechile.com/resultados"
         data= {'frmTerm': '{args}'.format(args = rut_args), 'frmOpcion': 'rut'}
         r = requests.post(url, data=data)
         soup = sp(r.text, 'html.parser')
         if r.status_code == 200:
-            patente_vehiculo = soup.find_all('td')[8].text
             tipo_vehiculo = soup.find_all('td')[9].text
             marca_vehiculo = soup.find_all('td')[10].text
             modelo_vehiculo = soup.find_all('td')[11].text
             n_motor = soup.find_all('td')[12].text
             año_vehiculo = soup.find_all('td')[13].text
-            bot.send_message(message.chat.id, 'Patente: ' + patente_vehiculo+'\n'+ 'Tipo: ' + tipo_vehiculo+'\n'+ 'Marca: ' + marca_vehiculo+'\n'+ 'Modelo: ' + modelo_vehiculo+'\n'+ 'N° Motor: ' + n_motor+'\n'+ 'Año: ' + año_vehiculo)
+            bot.send_message(message.chat.id, 'Patente: ' + str(tipo_vehiculo) + ' ' + str(marca_vehiculo) + ' ' + str(modelo_vehiculo) + ' ' + str(n_motor) + ' ' + str(año_vehiculo))
         else:
             bot.send_message(message.chat.id, 'La persona no tiene vehiculo.')
     except:
         bot.send_message(message.chat.id, 'La persona no tiene vehiculo.')
-
-  
-
-
 
 
 
