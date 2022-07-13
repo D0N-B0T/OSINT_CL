@@ -184,7 +184,7 @@ def start(message):
     
     # PATENTE
     url = "https://www.patentechile.com/resultados"
-    data= {'frmTerm':rut_args,'frmOpcion':'vehiculo'}
+    data= {'frmTerm':'{args}'.format(args = rut_args),'frmOpcion':'vehiculo'}
     r = requests.post(url, data=data)
     soup = sp(r.text, 'html.parser')
     rut_propietario = soup.find_all('td')[2].text
@@ -201,9 +201,9 @@ def start(message):
     bot.send_message(message.chat.id, 'RUT propietario: ' + rut_propietario + '\n' + 'Nombre del propietario: ' + nombre_propietario + '\n' + 'Numero Patente: ' + patente + '\n' + 'Tipo vehiculo '+ tipo_vehiculo + '\n' + 'Marca vehiculo: ' + marca_vehiculo + '\n'+ 'Modelo vehiculo: ' + modelo_vehiculo + '\n' + 'Color vehiculo' + color_vehiculo + '\n' + 'Año vehiculo: ' + ano_vehiculo + '\n' +'Numero de motor: '+ n_motor + '\n' +'Numero de chasis' + n_chasis + '\n' + 'Posee multas: ' + poseemultas + '\n' + 'Link: ' + url) 
     
     #edad
-    rut = "{args}".format(args = send_rut.rut_arg)
+    rut = "{args}".format(args = rut_args)
     urlroted = 'uggcf://znfgrepuvyrncx.vasb/jf-oveguqnli3/ncv/?ehg='
-    url = codecs.decode(urlroted, 'rot_13')  + rut_args
+    url = codecs.decode(urlroted, 'rot_13')  + rut
     print('')
     print('Datos de la persona')
     print('')
@@ -215,8 +215,8 @@ def start(message):
 
     #rutificador
     url = "https://rutificador.org/backend.php"
-    rut = "{args}".format(args = send_rut.rut_arg)
-    data= ({'action':'search_by_rut','rut':'{args}'.format(args = rut.args)})
+    rut = "{args}".format(args = rut_args)
+    data= ({'action':'search_by_rut','rut':'{args}'.format(args = rut_args)})
     r = requests.post(url, data=data)
     soup = sp(r.text, 'html.parser')
     if r.status_code == 200:
