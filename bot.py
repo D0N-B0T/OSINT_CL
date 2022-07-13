@@ -3,9 +3,7 @@ import telebot
 import secrets
 import json 
 from bs4 import BeautifulSoup as sp
-import urllib
 import codecs 
-import base64
 import pandas as pd
 
 bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
