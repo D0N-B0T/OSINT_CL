@@ -213,7 +213,7 @@ def start(message):
         datosJson = json.loads(r.text)
         data = json.loads(r.text)
         if data['statusCod'] == 'OK':
-            bot.send_message(message.chat.id, str(datosJson['listaPacientes'][0]['nombreCompleto']) + '\n' + 'Telefono: ' + ' ' +  + str(datosJson['listaPacientes'][0]['numeroTelefonoPrincipal']) + '\n' + 'Direccion: ' + str(datosJson['listaPacientes'][0]['direccion']) + '\n' + 'Email: ' + str(datosJson['listaPacientes'][0]['email']))
+            bot.send_message(message.chat.id, str(datosJson['listaPacientes'][0]['nombreCompleto']) + '\n' + 'Telefono: ' + str(datosJson['listaPacientes'][0]['numeroTelefonoPrincipal']) + '\n' + 'Direccion: ' + str(datosJson['listaPacientes'][0]['direccion']) + '\n' + 'Email: ' + str(datosJson['listaPacientes'][0]['email']))
         else:
             bot.send_message(message.chat.id, 'No se encontro ningun paciente con ese rut')
     else:
