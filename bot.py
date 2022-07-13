@@ -184,7 +184,8 @@ def start(message):
     
     # PATENTE
     url = "https://www.patentechile.com/resultados"
-    data= {'frmTerm':'{args}'.format(args = rut_args),'frmOpcion':'vehiculo'}
+    #frmTerm=19266781-k&frmOpcion=rut
+    data= {'frmTerm': rut_args, 'frmOpcion': 'rut'}
     r = requests.post(url, data=data)
     soup = sp(r.text, 'html.parser')
     rut_propietario = soup.find_all('td')[2].text
