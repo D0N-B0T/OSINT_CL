@@ -251,10 +251,14 @@ def getUser(message):
 
 @bot.message_handler(commands=['email'])
 def getEmail(message):
-    mail = os.system('holehe {email} --only-used').format(email = message.text)
+    email = message.text
+    email = email.split()
+    email = email[1]
+
+    mail = os.system('holehe {email} --only-used'.format(email = email))
     bot.send_message(message.chat.id, 'Email obtenido')
     bot.send_message(message.chat.id, mail)
-    
+
 
 
 
