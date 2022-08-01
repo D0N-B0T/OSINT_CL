@@ -241,8 +241,10 @@ def getUser(message):
     username = username.split()
     username = username[1]    
     b1 = fg.getGit(username)
+    bb1 = ft.getGit2(username)
     b2 = ft.getTrello(username)
     bot.send_message(message.chat.id, b1)
+    bot.send_message(message.chat.id, bb1)
     bot.send_message(message.chat.id, b2)
 
 
