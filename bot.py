@@ -5,6 +5,7 @@ import json
 from bs4 import BeautifulSoup as sp
 import codecs 
 import base64
+import os
 
 
 
@@ -245,14 +246,16 @@ def getUser(message):
     bot.send_message(message.chat.id, b1)
     bot.send_message(message.chat.id, b2)
 
-
-
-
-
-
-
-
-
-
 #add polling
+
+
+@bot.message_handler(commands=['email'])
+def getEmail(message):
+    mail = os.system('holehe {email} --only-used').format(email = message.text)
+    bot.send_message(message.chat.id, 'Email obtenido')
+    bot.send_message(message.chat.id, mail)
+    
+
+
+
 bot.infinity_polling()
