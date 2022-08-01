@@ -255,10 +255,11 @@ def getEmail(message):
     email = email.split()
     email = email[1]
 
-    mail = os.system('holehe {email} --only-used'.format(email = email))
-    bot.send_message(message.chat.id, 'Email obtenido')
-    bot.send_message(message.chat.id, mail)
-
+    mail = os.system('holehe {email} --only-used > text.txt'.format(email = email))
+    
+    bot.send_document(message.chat.id, open('text.txt', 'rb'))
+    bot.send_message(message.chat.id, open('text.txt', 'rb'))
+    
 
 
 
