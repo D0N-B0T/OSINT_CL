@@ -242,8 +242,10 @@ def getUser(message):
     username = username[1]    
     b1 = fg.getGit(username)
     b2 = ft.getTrello(username)
+    bot.send_photo(message.chat.id, 'avatar.jpg')
     bot.send_message(message.chat.id, b1)
     bot.send_message(message.chat.id, b2)
+
 
 
 
