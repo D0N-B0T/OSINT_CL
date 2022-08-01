@@ -228,7 +228,24 @@ def start(message):
         else:
             bot.send_message(message.chat.id, 'La persona no tiene vehiculo.')
     except:
-        bot.send_message(message.chat.id, 'La persona no tiene vehiculo.')
+        bot.send_message(message.chat.id, 'Error em requests.')
+
+
+
+@bot.message_handler(commands=['usr'])
+def getUser(message):
+    import modules.findGithub as fg
+    import modules.findTrello as ft
+    bot.send_message(message.chat.id, 'Obteniendo datos...')
+    username = message.text
+    username = username.split()
+    username = username[1]    
+    b1 = fg.getGit(username)
+    b2 = ft.getTrello(username)
+
+
+
+
 
 
 

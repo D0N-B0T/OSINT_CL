@@ -5,3 +5,6 @@ __pycache__/secrets.cpython-38.pyc
 __pycache__/token.cpython-38.pyc
 rutificador.py
 sii.py
+__pycache__/email.cpython-310.pyc
+.gitignore
+modules/__pycache__/findTrello.cpython-310.pyc
