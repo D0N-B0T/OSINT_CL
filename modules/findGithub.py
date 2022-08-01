@@ -11,14 +11,14 @@ def getGit(username):
     except:
         return 'Github: error de conexion'
 
-        
+
 def getGit2(username):
     try:
         url = "https://api.github.com/users/"
         r2 = requests.get(url + username)
         id = r2.get('id')
         avatar = r2.get('avatar_url')
-        return 'ID: '+'\n' + id +'Github nombre: '+ displaylogin +'\n'+ 'Github mail: '+ email  +'\n'+ 'Github avatar: '+ avatar
+        return 'ID: '+'\n' + id +'Github nombre: '+ '\n'+ 'Github mail: '+'\n'+ 'Github avatar: '+ avatar
     except:
         return 'Github: error de conexion'
     
