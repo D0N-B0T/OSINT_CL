@@ -7,7 +7,7 @@ def getGit(username):
         r = requests.get(url)
         displaylogin  = r.json()[0]['actor']['display_login']
         email = r.json()[0]['payload']['commits'][0]['author']['email']
-        return displaylogin + email
+        return 'Github nombre: '+ displaylogin +'\n'+ 'Github mail:'+ email
     except:
         return 'Github: User details not found'
     

@@ -8,7 +8,7 @@ def getTrello(username):
         soup = BeautifulSoup(r.text, 'html.parser')
         name = soup.find('h1', class_='full-name').text
         email = soup.find('a', class_='email').text
-        return name + email
+        return 'Trello name: '+name +'\n'+ 'Trello email: '+ email
     except:
         return 'Trello: User details not found'
     
