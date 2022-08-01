@@ -16,7 +16,6 @@ def send_patente(message):
     patente_args = patente_args.split()
     patente_args = patente_args[1]
     send_patente.patente_arg = patente_args
-    print(send_patente.patente_arg)
     bot.send_message(message.chat.id, patente())
 
 def patente():

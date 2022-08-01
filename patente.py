@@ -1,5 +1,3 @@
-
-from xml.dom import NO_MODIFICATION_ALLOWED_ERR
 import requests
 from bs4 import BeautifulSoup as sp
 
