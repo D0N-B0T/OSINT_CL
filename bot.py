@@ -257,8 +257,22 @@ def getEmail(message):
 
     mail = os.system('holehe {email} --only-used > text.txt'.format(email = email))
     
-    bot.send_document(message.chat.id, open('text.txt', 'rb'))
-    bot.send_message(message.chat.id, open('text.txt', 'rb'))
+    #remove everything except the emails
+    with open('text.txt', 'r') as f:
+        lines = f.readlines()
+    with open('text.txt', 'w') as f:
+        for line in lines:
+            if '@' in line:
+                f.write(line)
+    
+
+    for line in open('text.txt'):
+        bot.send_message(message.chat.id, line)
+    os.remove('text.txt')
+
+
+
+
     
 
 
