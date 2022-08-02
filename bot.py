@@ -261,9 +261,11 @@ def getEmail(message):
         for line in f:
             if line.startswith('[+]'):
                     bot.send_message(message.chat.id, line)
+            if line.startswith('[+] Email used, [-] Email not used, [x] Rate limit'):
+                    return
     
     os.remove('text.txt')
-    
+
 
     
         
