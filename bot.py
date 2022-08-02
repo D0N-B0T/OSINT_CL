@@ -256,12 +256,19 @@ def getEmail(message):
     email = email[1]
 
     mail = os.system('holehe {email} --only-used > text.txt'.format(email = email))
-    
-    #print only [+] ...
+
+    import re
+    ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
     with open('text.txt', 'r') as f:
+        text = f.read()
+        text = ansi_escape.sub('', text)
         for line in f:
             if line.startswith('[32m[+]'):
-                bot.send_message(message.chat.id, line)
+                    bot.send_message(message.chat.id, line)
+
+    
+        
+            
    
 
 
