@@ -1,3 +1,4 @@
+from pyparsing import line_end
 import requests
 import telebot
 import secrets
@@ -260,9 +261,9 @@ def getEmail(message):
     with open('text.txt', 'r') as f:
         for line in f:
             if line.startswith('[+]'):
-                    bot.send_message(message.chat.id, line)
-            if line.startswith('[+] Email used, [-] Email not used, [x] Rate limit'):
-                    return
+                bot.send_message(message.chat.id, line)
+            if line_end == 'limit':
+                return
     
     os.remove('text.txt')
 
