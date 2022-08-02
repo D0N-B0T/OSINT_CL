@@ -262,17 +262,7 @@ def getEmail(message):
         for line in f:
             if line.startswith('[32m[+]'):
                 bot.send_message(message.chat.id, line)
-
-    
-
-    for line in open('text.txt'):
-        bot.send_message(message.chat.id, line)
-    os.remove('text.txt')
-
-
-
-
-    
+   
 
 
 
