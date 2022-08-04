@@ -273,7 +273,8 @@ def getEmail(message):
 @bot.message_handler(func=lambda m: m.content_type == 'left_chat_member')
 def send_left_chat_member(message):
     bot.send_message(message.chat.id, 'Adios ' + message.left_chat_member.first_name + '!')
-    bot.leave_chat(message.chat.id)
+
+
     
 
 
