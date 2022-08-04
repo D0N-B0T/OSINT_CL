@@ -273,7 +273,7 @@ def getEmail(message):
 @bot.message_handler(commands=['left'])
 def left_chat_member(message):
     bot.send_message(message.chat.id, '====================================')
-    bot.send_message(message.chat.id, 'Usuario que dejo el grupo: ' + str(message.left_chat_member.first_name))
+    bot.send_message(message.chat.id, 'Usuario que dejo el grupo: ' + str(message.left_chat_member))
     bot.send_message(message.chat.id, '====================================')
 
 
@@ -281,7 +281,7 @@ def left_chat_member(message):
 @bot.message_handler(commands=['new'])
 def new_chat_member(message):
     bot.send_message(message.chat.id, '====================================')
-    bot.send_message(message.chat.id, 'Usuario que ingreso al grupo: ' + str(message.new_chat_member.first_name))
+    bot.send_message(message.chat.id, 'Usuario que ingreso al grupo: ' + str(message.new_chat_member))
     bot.send_message(message.chat.id, '====================================')
 
         
