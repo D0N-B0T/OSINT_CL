@@ -269,21 +269,21 @@ def getEmail(message):
     
 
 
-#send message when a user leaves the group
-@bot.message_handler(func=lambda m: m.content_type == 'left_chat_member')
-def send_left_chat_member(message):
-    bot.send_message(message.chat.id, 'Adios ' + message.left_chat_member.first_name + '!')
-
-#send message when a user is banned from the group
-@bot.message_handler(func=lambda m: m.content_type == 'new_chat_members')
-def send_new_chat_member(message):
-    bot.send_message(message.chat.id, 'Bienvenido ' + message.new_chat_members[0].first_name + '!')
+#left_chat_member 
+@bot.message_handler(commands=['left'])
+def left_chat_member(message):
+    bot.send_message(message.chat.id, '====================================')
+    bot.send_message(message.chat.id, 'Usuario que dejo el grupo: ' + str(message.left_chat_member.first_name))
+    bot.send_message(message.chat.id, '====================================')
 
 
-    
+#new_chat_member
+@bot.message_handler(commands=['new'])
+def new_chat_member(message):
+    bot.send_message(message.chat.id, '====================================')
+    bot.send_message(message.chat.id, 'Usuario que ingreso al grupo: ' + str(message.new_chat_member.first_name))
+    bot.send_message(message.chat.id, '====================================')
 
-
-    
         
             
    
