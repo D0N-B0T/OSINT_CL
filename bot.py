@@ -274,6 +274,11 @@ def getEmail(message):
 def send_left_chat_member(message):
     bot.send_message(message.chat.id, 'Adios ' + message.left_chat_member.first_name + '!')
 
+#send message when a user is banned from the group
+@bot.message_handler(func=lambda m: m.content_type == 'new_chat_members')
+def send_new_chat_member(message):
+    bot.send_message(message.chat.id, 'Bienvenido ' + message.new_chat_members[0].first_name + '!')
+
 
     
 
