@@ -1,3 +1,4 @@
+from queue import Full
 from pyparsing import line_end
 import requests
 import telebot
@@ -7,6 +8,11 @@ from bs4 import BeautifulSoup as sp
 import codecs 
 import base64
 import os
+import secretos as sec
+from fullcontact import FullContactClient
+
+
+
 
 
 
@@ -268,25 +274,34 @@ def getEmail(message):
     
     
 
+#FULLCONTACT
 
-#left_chat_member 
-@bot.message_handler(commands=['left'])
-def left_chat_member(message):
-    bot.send_message(message.chat.id, '====================================')
-    bot.send_message(message.chat.id, 'Usuario que dejo el grupo: ' + str(message.left_chat_member))
-    bot.send_message(message.chat.id, '====================================')
+FullContactClient = FullContactClient(api_key=sec.FULLCONTACT_KEY)
+
+@bot.message_handler(commands=['fullcontact'])
+def getFullContact(message):
+    url = "https://api.fullcontact.com/v3/person.enrich"
+    data = {'email': message.text}
+    #headers Authorization: Bearer {Your API Key}
+    headers = {'Authorization': 'Bearer ' + sec.FULLCONTACT_KEY}
+    r = requests.post(url, data=data, headers=headers)
+    if r.status_code == 200:
+        data = json.loads(r.text)
+        if data['status'] == 'OK':
+            bot.send_message(message.chat.id, 'Nombre: ' + str(data['person']['name']) + '\n' + 'Email: ' + str(data['person']['email']) + '\n' + 'Telefono: ' + str(data['person']['phoneNumbers'][0]['number']) + '\n' + 'Direccion: ' + str(data['person']['addresses'][0]['formatted']))
+        else:
+            bot.send_message(message.chat.id, 'No se encontro ningun contacto con ese email')
 
 
-#new_chat_member
-@bot.message_handler(commands=['new'])
-def new_chat_member(message):
-    bot.send_message(message.chat.id, '====================================')
-    bot.send_message(message.chat.id, 'Usuario que ingreso al grupo: ' + str(message.new_chat_member))
-    bot.send_message(message.chat.id, '====================================')
+# curl -X POST https://api.fullcontact.com/v3/person.enrich \
+# -H 'Authorization: Bearer {Your API Key}' \
+# -d '{
+#   "emails": [
+#     "snriedel85@gmail.com"
+#   ]
+# }'
 
-        
-            
-   
+
 
 
 

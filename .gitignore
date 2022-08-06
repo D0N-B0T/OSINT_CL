@@ -8,3 +8,4 @@ sii.py
 __pycache__/email.cpython-310.pyc
 .gitignore
 modules/__pycache__/findTrello.cpython-310.pyc
+secretos.py
