@@ -285,12 +285,11 @@ def getFullContact(message):
     #headers Authorization: Bearer {Your API Key}
     headers = {'Authorization': 'Bearer ' + sec.FULLCONTACT_KEY}
     r = requests.post(url, data=data, headers=headers)
-    if r.status_code == 200:
-        data = json.loads(r.text)
-        if data['status'] == 'OK':
-            bot.send_message(message.chat.id, 'Nombre: ' + str(data['person']['name']) + '\n' + 'Email: ' + str(data['person']['email']) + '\n' + 'Telefono: ' + str(data['person']['phoneNumbers'][0]['number']) + '\n' + 'Direccion: ' + str(data['person']['addresses'][0]['formatted']))
-        else:
-            bot.send_message(message.chat.id, 'No se encontro ningun contacto con ese email')
+    data = json.loads(r.text)
+    if data['status'] == 'OK':
+        bot.send_message(message.chat.id, 'Nombre: ' + str(data['person']['name']) + '\n' + 'Email: ' + str(data['person']['email']) + '\n' + 'Telefono: ' + str(data['person']['phoneNumbers'][0]['number']) + '\n' + 'Direccion: ' + str(data['person']['addresses'][0]['formatted']))
+    else:
+        bot.send_message(message.chat.id, 'No se encontro ningun contacto con ese email')
 
 
 # curl -X POST https://api.fullcontact.com/v3/person.enrich \
