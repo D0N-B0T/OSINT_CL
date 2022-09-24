@@ -289,15 +289,6 @@ def getFullContact(message):
     bot.send_message(message.chat.id, 'Nombre: ' + str(data['person']['name']) + '\n' + 'Email: ' + str(data['person']['email']) + '\n' + 'Telefono: ' + str(data['person']['phoneNumbers'][0]['number']) + '\n' + 'Direccion: ' + str(data['person']['addresses'][0]['formatted']))
 
 
-# curl -X POST https://api.fullcontact.com/v3/person.enrich \
-# -H 'Authorization: Bearer {Your API Key}' \
-# -d '{
-#   "emails": [
-#     "snriedel85@gmail.com"
-#   ]
-# }'
-
-
 
 
 
